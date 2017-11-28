@@ -1,39 +1,31 @@
-// server.js
-// where your node app starts
+const got = require('got');
+const cheerio = require('cheerio');
+const map = require('p-map');
 
-// init project
-var express = require('express');
-var app = express();
+const express = require('express');
+const app = express();
 
-// we've started you off with Express, 
-// but feel free to use whatever libs or frameworks you'd like through `package.json`.
+const UPDATED_AT_SELECTOR = '#main_content > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(3) > td:nth-child(1)';
 
-// http://expressjs.com/en/starter/static-files.html
-app.use(express.static('public'));
-
-// http://expressjs.com/en/starter/basic-routing.html
-app.get("/", function (request, response) {
-  response.sendFile(__dirname + '/views/index.html');
+app.get('/', (req, res) => {
+  res.sendStatus(404);
 });
 
-app.get("/dreams", function (request, response) {
-  response.send(dreams);
+async function checkUpdatedAt (id) {
+  const res = await got(`https://www.mangaupdates.com/releases.html?search=${id}&stype=series`);
+  const html = res.body;
+  const dom = cheerio.load(html);
+  
+  const updatedAt = dom(UPDATED_AT_SELECTOR).text();
+  const timestamp = (new Date(Date.parse(updatedAt))).valueOf();
+  
+  return timestamp;
+}
+
+app.get('/:mangaId', (req, res) => {
+  res.send(dreams);
 });
 
-// could also use the POST body instead of query string: http://expressjs.com/en/api.html#req.body
-app.post("/dreams", function (request, response) {
-  dreams.push(request.query.dream);
-  response.sendStatus(200);
-});
-
-// Simple in-memory store for now
-var dreams = [
-  "Find and count some sheep",
-  "Climb a really tall mountain",
-  "Wash the dishes"
-];
-
-// listen for requests :)
-var listener = app.listen(process.env.PORT, function () {
+app.listen(process.env.PORT, () => {
   console.log('Your app is listening on port ' + listener.address().port);
 });
