@@ -3,14 +3,13 @@ const cheerio = require('cheerio');
 const map = require('p-map');
 
 const Koa = require('koa');
+const route = require('koa-route');
 const cors = require('@koa/cors');
 
 const app = new Koa();
 
-const selectors = {
-  title: '#main_content > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(3) > td:nth-child(2)',
-  updatedAt: '#main_content > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(3) > td:nth-child(1)',
-};
+const SELECTOR_TITLE = '#main_content > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(3) > td:nth-child(2)';
+const SELECTOR_UPDATED_AT = '#main_content > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(3) > td:nth-child(1)';
 
 app.use(cors())
 
@@ -21,18 +20,18 @@ async function fetchManga (id) {
   const html = res.body;
   const dom = cheerio.load(html);
   
-  const title = dom(selectors.title).text();
-  const updatedAtDate = dom(selectors.updatedAt).text();
+  const title = dom(SELECTOR_TITLE).text();
+  const updatedAtDate = dom(SELECTOR_UPDATED_AT).text();
   const updatedAt = toTimestamp(updatedAtDate);
   
-  console.log(dom(selectors.title));
+  console.log(title);
   
   return { id, title, updatedAt };
 }
 
-app.get('/manga/:mangaId', async ctx => {
-  const results = await fetchManga(req.params.mangaId);
-  ctx.body.json(results);
-});
+app.use(route.get('/manga/:id', async (ctx, id) => {
+  const results = await fetchManga(id);
+  ctx.body = results;
+}));
 
 app.listen(process.env.PORT);
