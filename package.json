@@ -16,7 +16,8 @@
     "koa-path-match": "^2.0.0",
     "koa-route": "^3.2.0",
     "moment": "^2.19.2",
-    "moment-timezone": "^0.5.14"
+    "moment-timezone": "^0.5.14",
+    "lowdb": "^1.0.0"
   },
   "engines": {
     "node": "8.x"
