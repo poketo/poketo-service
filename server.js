@@ -53,10 +53,21 @@ app.use(route.get('/manga/:id', async (ctx, id) => {
   ctx.body = await fetchMangaMetadata(id);
 }));
 
-app.use(route.get('/collections', async ctx => {
-  ctx.body = db.get('collections')
-    .value();
+app.use(route.post('/collection/new', async ctx => {
+  const { name, series } = ctx.request.body;
+  
+  assert(name, 400, `No 'name' given for the collection`);
+  assert(Array.isArray(series), 400, `Collection 'series' must be an array`);
+  assert(series.length > 0, 400, `Collection 'series' must have at least one series`);
+  
+  const id = shortid.generate();
+  const newCollection = { id, series };
+  
+  db.get('collections').push(newCollection).write();
+  
+  ctx.body = newCollection;
 }));
+
 
 app.use(route.get('/collection/:id', async (ctx, id) => {
   const result = db.get('collections')
@@ -71,21 +82,15 @@ app.use(route.get('/collection/:id', async (ctx, id) => {
   ctx.body = result;
 }));
 
-app.use(route.post('/collections/new', async ctx => {
-  assert(ctx.request.body.name, 400, `No 'name' given for the collection`);
-  assert(Array.isArray(ctx.request.body.series), 400, `Collection 'series' must be an array`);
-  assert(ctx.request.body.series.length > 0, 400, `Collection 'series' must have at least one series`);
-  
-  const id = shortid.generate();
-}));
-
-app.use(route.post('/collection/:collectionId/markAsRead/:mangaId', async (ctx, collectionId, mangaId) => {
+app.use(route.get('/collection/:collectionId/markAsRead/:mangaId', async (ctx, collectionId, mangaId) => {
   db.get('collections')
     .getById(collectionId)
     .get('series')
     .getById(mangaId)
     .assign({ readAt: Math.round(Date.now() / 1000) })
     .write();
+  
+  ctx.status = 200
 }));
 
 app.listen(process.env.PORT);
