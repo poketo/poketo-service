@@ -43,12 +43,12 @@ async function fetchMangaMetadata (id) {
  * Routes
  */
 
-const db = {
+const dbb = {
   collections: [
     {
       id: 'ef202cef202c',
       series: [
-        
+        { id: '1370212', lastRead }
       ]
     }
   ]
@@ -72,6 +72,10 @@ app.use(route.get('/collection/:id', async (ctx, id) => {
 
 app.use(route.post('/collections/new', async ctx => {
   assert(ctx.request.body.name, 400, `No 'name' given for the collection`);
+  assert(Array.isArray(ctx.request.body.series), 400, `Collection 'series' must be an array`);
+  assert(ctx.request.body.series.length > 0, 400, `Collection 'series' must have at least one series`);
+  
+  
 }));
 
 app.use(route.post('/collection/:collectionId/markAsRead/:mangaId', async (ctx, collectionId, mangaId) => {
