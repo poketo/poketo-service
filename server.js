@@ -40,6 +40,10 @@ async function fetchMangaMetadata (id) {
  * Routes
  */
 
+app.use(route.get('/', async ctx => {
+  ctx.body = '🔖';
+}));
+
 app.use(route.get('/manga/:id', async (ctx, id) => {
   ctx.body = await fetchMangaMetadata(id);
 }));
