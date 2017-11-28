@@ -1,18 +1,20 @@
 const got = require('got');
 const cheerio = require('cheerio');
-const moment = require('moment');
+const moment = require('moment-timezone');
 const map = require('p-map');
 
 const Koa = require('koa');
 const route = require('koa-route');
 const cors = require('@koa/cors');
 
+const TIMEZONE = 'America/Los_Angeles';
+
 const app = new Koa();
 
 app.use(cors())
 
 function toTimestamp (dateString) {
-  return moment.utc(dateString, 'MM/DD/YY').unix();
+  return moment.tz(dateString, 'MM/DD/YY', TIMEZONE).unix();
 }
 
 async function fetchMangaMetadata (id) {
