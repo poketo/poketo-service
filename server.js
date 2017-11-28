@@ -12,7 +12,7 @@ const app = new Koa();
 app.use(cors())
 
 function toTimestamp (dateString) {
-  return moment(dateString, 'MM/DD/YY').unix();
+  return moment.utc(dateString, 'MM/DD/YY').unix();
 }
 
 async function fetchMangaMetadata (id) {
