@@ -70,27 +70,29 @@ app.use(route.post('/collection/new', async ctx => {
 
 
 app.use(route.get('/collection/:id', async (ctx, id) => {
-  const result = db.get('collections')
-    .getById(id)
-    .value();
+  const collectionObj = db.get('collections').getById(id).value();
   
-  if (!result) {
-    ctx.throw(404);
-    return;
-  }
+  assert(collectionObj, 404);
   
-  ctx.body = result;
+  ctx.body = collectionObj;
+}));
+
+app.use(route.patch('/collection/:id', async (ctx, id) => {
+  const collection = db.get('collections').getById(id);
+  
+  
 }));
 
 app.use(route.get('/collection/:collectionId/markAsRead/:mangaId', async (ctx, collectionId, mangaId) => {
-  db.get('collections')
-    .getById(collectionId)
-    .get('series')
-    .getById(mangaId)
-    .assign({ readAt: Math.round(Date.now() / 1000) })
-    .write();
+  const collection = db.get('collections').getById(collectionId);
+  const series = collection.get('series').getById(mangaId);
   
-  ctx.status = 200
+  assert(collection.value(), 404);
+  assert(series.value(), 404);
+  
+  series.assign({ readAt: Math.round(Date.now() / 1000) }).write();
+  
+  ctx.status = 204;
 }));
 
 app.listen(process.env.PORT);
