@@ -77,10 +77,10 @@ app.use(route.get('/collection/:id', async (ctx, id) => {
   ctx.body = collectionObj;
 }));
 
-app.use(route.patch('/collection/:id', async (ctx, id) => {
-  const collection = db.get('collections').getById(id);
+app.use(route.patch('/collection/:collectionId', async (ctx, collectionId) => {
+  const collection = db.get('collections').getById(collectionId);
   
-  
+  ctx.status = 204;
 }));
 
 app.use(route.get('/collection/:collectionId/markAsRead/:mangaId', async (ctx, collectionId, mangaId) => {
