@@ -11,7 +11,9 @@ const app = new Koa();
 
 app.use(cors())
 
-const toTimestamp = dateString => moment(dateString, 'MM/DD/YY').unix();
+function toTimestamp (dateString) {
+  return moment(dateString, 'MM/DD/YY').unix();
+}
 
 async function fetchMangaMetadata (id) {
   const res = await got(`https://www.mangaupdates.com/releases.html?search=${id}&stype=series`);
