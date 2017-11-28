@@ -7,7 +7,9 @@ const FileSync = require('lowdb/adapters/FileSync')
 
 const Koa = require('koa');
 const route = require('koa-route');
+const bodyparser = require('koa-bodyparser');
 const cors = require('@koa/cors');
+const assert = require('http-assert');
 
 const TIMEZONE = 'America/Los_Angeles';
 
@@ -19,6 +21,7 @@ const db = low(adapter);
 db.defaults({ collections: [] }).write();
 
 app.use(cors())
+app.use(bodyparser());
 
 function toTimestamp (dateString) {
   return moment.tz(dateString, 'MM/DD/YY', TIMEZONE).unix();
@@ -53,15 +56,18 @@ app.use(route.get('/collections', async ctx => {
 }));
 
 app.use(route.get('/collection/:id', async (ctx, id) => {
-  ctx.body = `Hello ${id}`;
+  ctx.body = db.get('collections').find({ id }).value();
 }));
 
 app.use(route.post('/collections/new', async ctx => {
-  
+  assert(ctx.request.body.name, 400, `No 'name' given for the collection`);
 }));
 
 app.use(route.post('/collection/:collectionId/read/:mangaId', async (ctx, collectionId, mangaId) => {
-  
+  db.get('collections')
+    .find({ id: collectionId })
+    .assign({ name: 'Read!' })
+    .write();
 }));
 
 app.listen(process.env.PORT);
