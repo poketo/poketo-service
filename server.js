@@ -1,10 +1,11 @@
 const got = require('got');
 const cheerio = require('cheerio');
 const map = require('p-map');
-const cors = require('cors');
 
-const express = require('express');
-const app = express();
+const Koa = require('koa');
+const cors = require('@koa/cors');
+
+const app = new Koa();
 
 const selectors = {
   title: '#main_content > table > tbody > tr:nth-child(3) > td > table > tbody > tr:nth-child(1) > td > table > tbody > tr:nth-child(3) > td:nth-child(2)',
@@ -24,16 +25,14 @@ async function fetchManga (id) {
   const updatedAtDate = dom(selectors.updatedAt).text();
   const updatedAt = toTimestamp(updatedAtDate);
   
-  console.log(title, updatedAtDate);
+  console.log(dom(selectors.title));
   
   return { id, title, updatedAt };
 }
 
-app.get('/manga/:mangaId', async (req, res) => {
+app.get('/manga/:mangaId', async ctx => {
   const results = await fetchManga(req.params.mangaId);
-  res.json(results);
+  ctx.body.json(results);
 });
 
-const listener = app.listen(process.env.PORT, () => {
-  console.log(`Your app is listening on port ${listener.address().port}`);
-});
+app.listen(process.env.PORT);

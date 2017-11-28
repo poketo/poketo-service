@@ -8,11 +8,11 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "express": "^4.16.2",
     "cheerio": "^0.22.0",
     "got": "^8.0.0",
     "p-map": "^1.2.0",
-    "cors": "^2.8.4"
+    "@koa/cors": "^2.2.1",
+    "koa": "^2.4.1",
   },
   "engines": {
     "node": "8.x"
