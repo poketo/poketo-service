@@ -43,6 +43,17 @@ async function fetchMangaMetadata (id) {
  * Routes
  */
 
+const db = {
+  collections: [
+    {
+      id: 'ef202cef202c',
+      series: [
+        
+      ]
+    }
+  ]
+}
+
 app.use(route.get('/', async ctx => {
   ctx.body = '🔖';
 }));
@@ -63,7 +74,7 @@ app.use(route.post('/collections/new', async ctx => {
   assert(ctx.request.body.name, 400, `No 'name' given for the collection`);
 }));
 
-app.use(route.post('/collection/:collectionId/read/:mangaId', async (ctx, collectionId, mangaId) => {
+app.use(route.post('/collection/:collectionId/markAsRead/:mangaId', async (ctx, collectionId, mangaId) => {
   db.get('collections')
     .find({ id: collectionId })
     .assign({ name: 'Read!' })
