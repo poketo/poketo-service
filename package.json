@@ -14,7 +14,8 @@
     "@koa/cors": "^2.2.1",
     "koa": "^2.4.1",
     "koa-path-match": "^2.0.0",
-    "koa-route": "^3.2.0"
+    "koa-route": "^3.2.0",
+    "moment": "^2.19.2"
   },
   "engines": {
     "node": "8.x"
