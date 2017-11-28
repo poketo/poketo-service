@@ -3,6 +3,7 @@ const cheerio = require('cheerio');
 const moment = require('moment-timezone');
 const map = require('p-map');
 const low = require('lowdb');
+const shortid = require('shortid');
 const FileSync = require('lowdb/adapters/FileSync')
 
 const Koa = require('koa');
@@ -18,6 +19,7 @@ const app = new Koa();
 const adapter = new FileSync('.data/db.json');
 const db = low(adapter);
 
+db._.mixin(require('lodash-id'));
 db.defaults({ collections: [] }).write();
 
 app.use(cors())
@@ -43,17 +45,6 @@ async function fetchMangaMetadata (id) {
  * Routes
  */
 
-const dbb = {
-  collections: [
-    {
-      id: 'ef202cef202c',
-      series: [
-        { id: '1370212', lastRead }
-      ]
-    }
-  ]
-}
-
 app.use(route.get('/', async ctx => {
   ctx.body = '🔖';
 }));
@@ -63,11 +54,21 @@ app.use(route.get('/manga/:id', async (ctx, id) => {
 }));
 
 app.use(route.get('/collections', async ctx => {
-  ctx.body = db.get('collections').value();
+  ctx.body = db.get('collections')
+    .value();
 }));
 
 app.use(route.get('/collection/:id', async (ctx, id) => {
-  ctx.body = db.get('collections').find({ id }).value();
+  const result = db.get('collections')
+    .getById(id)
+    .value();
+  
+  if (!result) {
+    ctx.throw(404);
+    return;
+  }
+  
+  ctx.body = result;
 }));
 
 app.use(route.post('/collections/new', async ctx => {
@@ -75,13 +76,15 @@ app.use(route.post('/collections/new', async ctx => {
   assert(Array.isArray(ctx.request.body.series), 400, `Collection 'series' must be an array`);
   assert(ctx.request.body.series.length > 0, 400, `Collection 'series' must have at least one series`);
   
-  
+  const id = shortid.generate();
 }));
 
 app.use(route.post('/collection/:collectionId/markAsRead/:mangaId', async (ctx, collectionId, mangaId) => {
   db.get('collections')
-    .find({ id: collectionId })
-    .assign({ name: 'Read!' })
+    .getById(collectionId)
+    .get('series')
+    .getById(mangaId)
+    .assign({ readAt: Math.round(Date.now() / 1000) })
     .write();
 }));
 
