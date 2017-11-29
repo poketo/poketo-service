@@ -70,7 +70,10 @@ app.use(route.post('/collection/new', async ctx => {
 
 
 app.use(route.get('/collection/:id', async (ctx, id) => {
-  const collectionObj = db.get('collections').getById(id).value();
+  const collection = db.get('collections').getById(id);
+  const seriesList = collection.get('series').sortBy('updatedAt');
+
+  const collectionObj = collection.value();
   
   assert(collectionObj, 404);
   
