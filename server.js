@@ -37,8 +37,9 @@ async function fetchMangaMetadata (id) {
   const title = dom('td.text.pad[bgcolor]:nth-child(2)', '#main_content').first().text();
   const updatedAtDate = dom('td.text.pad[bgcolor]:nth-child(1)', '#main_content').first().text();
   const updatedAt = toTimestamp(updatedAtDate);
+  const latestChapter = 0;
   
-  return { id, title, updatedAt };
+  return { id, title, latestChapter, updatedAt };
 }
 
 /**
@@ -78,6 +79,10 @@ app.use(route.get('/collection/:id', async (ctx, id) => {
   assert(collectionObj, 404);
   
   ctx.body = collectionObj;
+}));
+
+app.use(route.get('/collection/:id/feed', async (ctx, id) => {
+  // TODO
 }));
 
 app.use(route.patch('/collection/:collectionId', async (ctx, collectionId) => {
