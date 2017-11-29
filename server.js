@@ -37,9 +37,8 @@ async function fetchMangaMetadata (id) {
   const title = dom('td.text.pad[bgcolor]:nth-child(2)', '#main_content').first().text();
   const updatedAtDate = dom('td.text.pad[bgcolor]:nth-child(1)', '#main_content').first().text();
   const updatedAt = toTimestamp(updatedAtDate);
-  const latestChapter = 0;
   
-  return { id, title, latestChapter, updatedAt };
+  return { id, title, updatedAt };
 }
 
 /**
@@ -70,23 +69,30 @@ app.use(route.post('/collection/new', async ctx => {
 }));
 
 
+app.use(route.get('/'))
+
 app.use(route.get('/collection/:id', async (ctx, id) => {
   const collection = db.get('collections').getById(id);
-  const seriesList = collection.get('series').sortBy('updatedAt');
-
-  const collectionObj = collection.value();
+  assert(collection.value(), 404);
   
-  assert(collectionObj, 404);
+  const series = collection.get('series');
+  const seriesArray = series.value();
   
-  ctx.body = collectionObj;
+  const result = await map(seriesArray, async manga => {
+    const metadata = await fetchMangaMetadata(manga.id);
+    return { ...manga, ...metadata };
+  }, { concurrency: 3 });
+  
+  const sortedResult = result.slice().sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+  
+  ctx.body = sortedResult;
 }));
 
-app.use(route.get('/collection/:id/feed', async (ctx, id) => {
-  // TODO
-}));
-
-app.use(route.patch('/collection/:collectionId', async (ctx, collectionId) => {
+app.use(route.get('/collection/:collectionId/add/:mangaId', async (ctx, collectionId, mangaId) => {
   const collection = db.get('collections').getById(collectionId);
+  assert(collection.value(), 404);
+  
+  
   
   ctx.status = 204;
 }));
