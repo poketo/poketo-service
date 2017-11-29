@@ -106,6 +106,11 @@ app.use(route.post('/collection/:collectionId/add', async (ctx, collectionId) =>
   ctx.status = 204;
 }));
 
+app.use(route.delete('/collection/:collectionId/series/:mangaId', async (ctx, collectionId, mangaId) => {
+  const collection = db.get('collections').getById(collectionId);
+  const seriesList = collection.get('series').getById(mangaId);
+}));
+
 app.use(route.get('/collection/:collectionId/markAsRead/:mangaId', async (ctx, collectionId, mangaId) => {
   const collection = db.get('collections').getById(collectionId);
   const series = collection.get('series').getById(mangaId);
