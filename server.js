@@ -94,12 +94,12 @@ app.use(route.post('/collection/:collectionId/add', async (ctx, collectionId) =>
   assert(id, 400, `No 'id' given`);
   assert(linkToUrl, 400, `No 'linkToUrl' given`);
   
-  const series = collection.get('series');
-  const manga = series.getById(id).value();
+  const seriesList = collection.get('series');
+  const manga = seriesList.getById(id).value();
   
   assert(manga === null || manga === undefined, 204, `Series with id '${id}' already added to the collection!`);
   
-  series
+  seriesList
     .push({ id, linkToUrl, readAt: null })
     .write();
   
@@ -113,9 +113,11 @@ app.use(route.get('/collection/:collectionId/markAsRead/:mangaId', async (ctx, c
   assert(collection.value(), 404);
   assert(series.value(), 404);
   
-  series.assign({ readAt: Math.round(Date.now() / 1000) }).write();
+  const readAt = Math.round(Date.now() / 1000);
   
-  ctx.status = 204;
+  series.assign({ readAt }).write();
+  
+  ctx.body = series.value();
 }));
 
 app.listen(process.env.PORT);
