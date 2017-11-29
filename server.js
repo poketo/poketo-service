@@ -68,9 +68,6 @@ app.use(route.post('/collection/new', async ctx => {
   ctx.body = newCollection;
 }));
 
-
-app.use(route.get('/'))
-
 app.use(route.get('/collection/:id', async (ctx, id) => {
   const collection = db.get('collections').getById(id);
   assert(collection.value(), 404);
@@ -88,11 +85,23 @@ app.use(route.get('/collection/:id', async (ctx, id) => {
   ctx.body = sortedResult;
 }));
 
-app.use(route.get('/collection/:collectionId/add/:mangaId', async (ctx, collectionId, mangaId) => {
+app.use(route.post('/collection/:collectionId/add', async (ctx, collectionId) => {
   const collection = db.get('collections').getById(collectionId);
   assert(collection.value(), 404);
   
+  const { id, linkToUrl } = ctx.request.body;
   
+  assert(id, 400, `No 'id' given`);
+  assert(linkToUrl, 400, `No 'linkToUrl' given`);
+  
+  const series = collection.get('series');
+  const manga = series.getById(id).value();
+  
+  assert(manga === null || manga === undefined, 204, `Series with id '${id}' already added to the collection!`);
+  
+  series
+    .push({ id, linkToUrl, readAt: null })
+    .write();
   
   ctx.status = 204;
 }));
