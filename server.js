@@ -103,7 +103,7 @@ app.use(route.post('/collection/:collectionId/add', async (ctx, collectionId) =>
     .push({ id, linkToUrl, readAt: null })
     .write();
   
-  ctx.status = 204;
+  ctx.body = seriesList.value();
 }));
 
 app.use(route.delete('/collection/:collectionId/series/:mangaId', async (ctx, collectionId, mangaId) => {
