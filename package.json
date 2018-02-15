@@ -1,8 +1,8 @@
 {
-  "name": "pokuro-api",
+  "name": "poketo-api",
   "version": "0.0.1",
   "private": true,
-  "description": "An API for manga sites across the web",
+  "description": "An API for scraping manga sites across the web",
   "main": "dist/server.js",
   "scripts": {
     "start": "node dist/server.js",
