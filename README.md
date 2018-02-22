@@ -1,17 +1,26 @@
-🍡 Poketo API
+Poketo Service
 ============
 
-Lightweight backend service for the Poketo manga reader.
+Lightweight backend service for the [Poketo manga reader](https://poketo.site).
 
-Stores minimal data about collections (to sync across devices), and scrapes [MangaUpdates](https://mangaupdates.com) to get information about new chapters.
+Stores as little data as possible about manga collections to let you sync across devices. Scrapes scanlator / aggregator sites to get information about series and make it easy to read new chapters.
 
-Supported Sites / Groups:
-* [Helvetica Scans](http://helveticascans.com/)
-* [Meraki Scans](http://merakiscans.com/)
-* [MangaUpdates](http://mangaupdates.com/)
-* It's easy to add more! [Make an issue](https://github.com/rosszurowski/poketo-api) to request a group you'd like.
+Supported Sites / Groups
+------------------------
 
-Deployed on [Now](https://now.sh). Feel free to fork this repo on [Glitch](https://glitch.me) if you want to run your own instance.
+Group  | Supports Watching | Supports Reading
+-------|-------------------|-----------------
+[Helvetica Scans](http://helveticascans.com/) | ✓ | ✓ |
+[MangaUpdates](http://mangaupdates.com/) | ✓ | |
+[Mangakakalot](http://mangakakalot.com) | ✓ | ✓ |
+[Meraki Scans](http://merakiscans.com/) | ✓ | ✓ |
+
+If there's a site / group you'd like to see supported, [make an issue!](https://github.com/rosszurowski/poketo-service).
+
+Details
+-------
+
+Deployed on [Now](https://now.sh) at [poketo-api.now.sh](https://poketo-api.now.sh). Fork this repo on [Glitch](https://glitch.me) if you want to run your own instance.
 
 
 License
