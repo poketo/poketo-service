@@ -15,12 +15,14 @@ Group  | Supports Watching | Supports Reading
 [Mangakakalot](http://mangakakalot.com) | ✓ | ✓ |
 [Meraki Scans](http://merakiscans.com/) | ✓ | ✓ |
 
-If there's a site / group you'd like to see supported, [make an issue!](https://github.com/rosszurowski/poketo-service).
+If there's a site / group you'd like to see supported, [make an issue!](https://github.com/rosszurowski/poketo-service/issues/new)
 
 Details
 -------
 
 Deployed on [Now](https://now.sh) at [poketo-api.now.sh](https://poketo-api.now.sh). Fork this repo on [Glitch](https://glitch.me) if you want to run your own instance.
+
+Front-end code can be found at [rosszurowski/poketo-site](https://github.com/rosszurowski/poketo-site).
 
 
 License
