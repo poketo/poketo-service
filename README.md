@@ -17,7 +17,7 @@ Supported Sites / Groups
 Group  | Supports Watching | Supports Reading
 -------|-------------------|-----------------
 [Helvetica Scans](http://helveticascans.com/) | ✓ | ✓ |
-[MangaHere](http://www.mangahere.cc/) | ✓ | ✓ |
+[MangaHere](http://www.mangahere.cc/) | ✓ | ✓ (slow) |
 [MangaUpdates](http://mangaupdates.com/) | ✓ | |
 [Mangakakalot](http://mangakakalot.com) | ✓ | ✓ |
 [Meraki Scans](http://merakiscans.com/) | ✓ | ✓ |
