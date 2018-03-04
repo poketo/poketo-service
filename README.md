@@ -3,7 +3,13 @@ Poketo Service
 
 Lightweight backend service for the [Poketo manga reader](https://poketo.site).
 
-Stores as little data as possible about manga collections to let you sync across devices. Scrapes scanlator / aggregator sites to get information about series and make it easy to read new chapters.
+It's nice when browsers can handle everything on their own. The fewer servers involved, the better. Unfortunately, due to web restrictions browsers can't:
+
+* Scrape sites
+* Sync across devices
+* Persist data over long periods of time
+
+This API service fills those gaps. It scrapes scanlator / aggregator sites to get series info and chapter images. It stores manga collections on a server for permanence and cross-device browsing, but only as little data as possible (ie. no email, no accounts).
 
 Supported Sites / Groups
 ------------------------
