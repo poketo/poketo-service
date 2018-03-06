@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@koa/cors": "^2.2.1",
+    "@sindresorhus/string-hash": "^1.0.0",
     "cheerio": "^0.22.0",
     "got": "^8.0.0",
     "koa": "^2.4.1",
