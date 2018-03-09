@@ -2,7 +2,7 @@
 
 exports[`poketo getChapter returns a chapter 1`] = `
 Object {
-  "id": "1086966772",
+  "id": "1245410392",
   "pages": Array [
     Object {
       "height": 700,
@@ -89,15 +89,15 @@ Object {
       "width": 1000,
     },
   ],
-  "seriesId": "2394231255",
+  "seriesId": "127745265",
   "slug": "2",
-  "sourceUrl": "http://merakiscans.com/senryu-girl/2",
+  "url": "http://merakiscans.com/senryu-girl/2",
 }
 `;
 
 exports[`poketo getChapter returns a chapter 2`] = `
 Object {
-  "id": "494569081",
+  "id": "1543224265",
   "pages": Array [
     Object {
       "height": 900,
@@ -514,8 +514,8 @@ Object {
       "width": 900,
     },
   ],
-  "seriesId": "helvetica-scans-talentless-nana",
+  "seriesId": "4160342791",
   "slug": "en/1/2",
-  "sourceUrl": "http://helveticascans.com/r/read/talentless-nana/en/1/2/page/1",
+  "url": "http://helveticascans.com/r/read/talentless-nana/en/1/2/page/1",
 }
 `;
