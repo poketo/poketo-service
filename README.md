@@ -38,10 +38,10 @@ POST   /collection/:slug/bookmark/new              Create a new bookmark
 DELETE /collection/:slug/bookmark/:seriesId        Remove a bookmark
 POST   /collection/:slug/bookmark/:seriesId/read   Mark a bookmark as "read"
 
-GET    /series/:url                                Get series info by URL
-GET    /series/:siteId/:seriesSlug                 Get series info by site and slug
-GET    /chapter/:url                               Get chapter info by URL
-GET    /chapter/:siteId/:seriesSlug/:chapterSlug   Get chapter info by site and slug
+GET    /series?url=<1>                             Get series info by URL
+GET    /series?siteId=<1>&seriesSlug=<2>           Get series info by site and slug
+GET    /chapter?=url=<1>                           Get chapter info by URL
+GET    /chapter?siteId=<1>&seriesSlug=<2>&chapterSlug=<3>   Get chapter info by site and slug
 ```
 
 
