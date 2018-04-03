@@ -14,12 +14,14 @@ This service fills those gaps. It uses Node to scrape scanlator / aggregator sit
 Supported Sites / Groups
 ------------------------
 
-Group  | Supports Watching | Supports Reading
+Group  | Supports Following | Supports Reading
 -------|-------------------|-----------------
 [Helvetica Scans](http://helveticascans.com/) | ✓ | ✓ |
-[MangaHere](http://www.mangahere.cc/) | ✓ | ✓ (slow) |
+[MangaHere](http://www.mangahere.cc/) | ✓ | ✓ (very slow) |
 [MangaUpdates](http://mangaupdates.com/) | ✓ | |
+[Mangadex](https://mangadex.org) | ✓ | ✓ |
 [Mangakakalot](http://mangakakalot.com) | ✓ | ✓ |
+[Manganelo](http://manganelo.com) | ✓ | ✓ |
 [Meraki Scans](http://merakiscans.com/) | ✓ | ✓ |
 
 If there's a site / group you'd like to see supported, [make an issue!](https://github.com/rosszurowski/poketo-service/issues/new)
