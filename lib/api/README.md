@@ -3,13 +3,13 @@ poketo-lib
 
 A Node library for fetching data from manga aggregator and scanlator sites.
 
-:construction: This project is still v0.x.x and the API is subject to change, especially as more sites are added.
+:construction: This project is still `v0.x.x` and the API is subject to change, especially as more sites are added.
 
 ## Install
 
 **Coming soon!** Right now this library is still baked into the Poketo micro-service to make developing easier. But in the future:
 
-```
+```bash
 npm install poketo --save
 ```
 
@@ -31,7 +31,7 @@ If there's a site / group you'd like to see supported, [make an issue!](https://
 
 ### API
 
-```
+```jsx
 import poketo from 'poketo';
 ```
 
@@ -39,7 +39,7 @@ import poketo from 'poketo';
 
 Get metadata about a series, including metadata (but not pages) for individual chapters.
 
-```
+```jsx
 const series = await poketo.getSeries('meraki-scans', 'senryu-girl');
 
 {
@@ -64,7 +64,7 @@ const series = await poketo.getSeries('meraki-scans', 'senryu-girl');
 
 Get page data for a given chapter. Unlike `poketo.getSeries`, this method does not include much metadata.
 
-```
+```jsx
 const chapter = await poketo.getChapter('meraki-scans', 'senryu-girl', '5');
 
 {
