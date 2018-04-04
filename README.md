@@ -3,6 +3,10 @@ poketo-service
 
 A micro-service / micro-app for grabbing data from the [Poketo library](https://github.com/poketo/service/tree/master/lib/api).
 
+For supported sites and a Node library, check out [the library docs](https://github.com/poketo/service/tree/master/lib/api).
+
+## Documentation
+
 ### Context
 
 It's nice when browsers can handle everything on their own. The fewer servers involved, the better. Unfortunately, due to web restrictions browsers can't:
@@ -13,21 +17,7 @@ It's nice when browsers can handle everything on their own. The fewer servers in
 
 This service fills those gaps. It uses Node to scrape scanlator or aggregator sites for series info and chapter images. It stores manga collections on a server for permanence and cross-device browsing, but by capturing as little data as possible (ie. no email, no accounts).
 
-### Supported Sites
-
-Site   | URL  | Supports Following | Supports Reading
--------|------|--------------------|------------------
-Helvetica Scans | http://helveticascans.com | ✓ | ✓ |
-MangaHere | http://www.mangahere.cc | ✓ | ✓ (very slow) |
-MangaUpdates | http://mangaupdates.com | ✓ | |
-Mangadex | https://mangadex.org | ✓ | ✓ |
-Mangakakalot | http://mangakakalot.com | ✓ | ✓ |
-Manganelo | http://manganelo.com | ✓ | ✓ |
-Meraki Scans | http://merakiscans.com | ✓ | ✓ |
-
-If there's a site / group you'd like to see supported, [make an issue!](https://github.com/poketo/service/issues/new)
-
-### API Documentation
+### API
 
 More detailed docs to come, but for now…
 
@@ -41,8 +31,8 @@ POST   /collection/:slug/bookmark/:seriesId/read    Mark a bookmark as "read"
 
 # Poketo endpoints
 GET    /series?url=1                                Get series info by URL
-GET    /series?siteId=1&seriesSlug2                 Get series info by site and slug
-GET    /chapter?=url=1                              Get chapter info by URL
+GET    /series?siteId=1&seriesSlug=2                Get series info by site and slug
+GET    /chapter?url=1                               Get chapter info by URL
 GET    /chapter?siteId=1&seriesSlug=2&chapterSlug=3 Get chapter info by site and slug
 ```
 
