@@ -4,8 +4,8 @@
   "private": true,
   "main": "dist/server.js",
   "scripts": {
-    "start": "node dist/server.js",
-    "dev": "nodemon lib/server.js --exec babel-node --presets env,stage-2,flow",
+    "now-start": "node dist/server.js",
+    "start": "nodemon lib/server.js --exec babel-node --presets env,stage-2,flow",
     "build": "babel lib -d dist --ignore '*.test.js'",
     "deploy": "now --public --name poketo-api",
     "test": "jest"
