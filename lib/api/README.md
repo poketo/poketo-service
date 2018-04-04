@@ -35,13 +35,19 @@ If there's a site / group you'd like to see supported, [make an issue!](https://
 import poketo from 'poketo';
 ```
 
+If you're using a bundler that doesn't support ES6 modules, you'll need to use the following
+
+```jsx
+const poketo = require('poketo').default;
+```
+
 #### `poketo.constructUrl(siteId: string, seriesSlug: ?string, chapterSlug: ?string): string`
 
 Returns a site URL from the pieces passed in. Great for converting between series and chapter IDs to URLs to request.
 
-```
+```jsx
 const url = poketo.constructUrl('meraki-scans', 'senryu-girl', '5');
-// 'http://merakiscans.com/senryu-girl/5'
+// http://merakiscans.com/senryu-girl/5
 ```
 
 #### `poketo.getSeries(url: string): Promise<Series>`
