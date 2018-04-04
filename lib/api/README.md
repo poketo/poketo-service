@@ -35,12 +35,21 @@ If there's a site / group you'd like to see supported, [make an issue!](https://
 import poketo from 'poketo';
 ```
 
-#### `poketo.getSeries(siteId: string, seriesSlug: string): Promise<Series>`
+#### `poketo.constructUrl(siteId: string, seriesSlug: ?string, chapterSlug: ?string): string`
 
-Get metadata about a series, including metadata (but not pages) for individual chapters.
+Returns a site URL from the pieces passed in. Great for converting between series and chapter IDs to URLs to request.
+
+```
+const url = poketo.constructUrl('meraki-scans', 'senryu-girl', '5');
+// 'http://merakiscans.com/senryu-girl/5'
+```
+
+#### `poketo.getSeries(url: string): Promise<Series>`
+
+Get metadata about a series, including for individual chapters (but not pages within those chapters).
 
 ```jsx
-const series = await poketo.getSeries('meraki-scans', 'senryu-girl');
+const series = await poketo.getSeries('http://merakiscans.com/senryu-girl');
 
 {
   id: "meraki-scans:senryu-girl",
@@ -60,12 +69,12 @@ const series = await poketo.getSeries('meraki-scans', 'senryu-girl');
 }
 ```
 
-#### `poketo.getChapter(siteId: string, seriesSlug: ?string, chapterSlug: string): Promise<Chapter>`
+#### `poketo.getChapter(url: string): Promise<Chapter>`
 
 Get page data for a given chapter. Unlike `poketo.getSeries`, this method does not include much metadata.
 
 ```jsx
-const chapter = await poketo.getChapter('meraki-scans', 'senryu-girl', '5');
+const chapter = await poketo.getChapter('http://merakiscans.com/senryu-girl/5');
 
 {
   id: "meraki-scans:senryu-girl:1",
