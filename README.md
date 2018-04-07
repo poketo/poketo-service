@@ -3,7 +3,7 @@ poketo-service
 
 A micro-service / micro-app for grabbing data from the [Poketo library](https://github.com/poketo/service/tree/master/lib/api).
 
-For supported sites and a Node library, check out [the library docs](https://github.com/poketo/service/tree/master/lib/api).
+For supported sites and a Node library, check out [the library docs](https://github.com/poketo/lib).
 
 ## Documentation
 
@@ -36,7 +36,7 @@ GET    /chapter?url=1                               Get chapter info by URL
 GET    /chapter?siteId=1&seriesSlug=2&chapterSlug=3 Get chapter info by site and slug
 ```
 
-The plan is to split [the api folder](https://github.com/poketo/service/tree/master/lib/api) into it's own Node library so others can build on top of it too.
+The Poketo endpoints are direct calls to the [poketo library](https://github.com/poketo/lib), so others can build on top of it too.
 
 ### Colophon
 
