@@ -1,7 +1,7 @@
 poketo-service
 ============
 
-A micro-service / micro-app for grabbing data from the [Poketo library](https://github.com/poketo/service/tree/master/lib/api).
+A micro-service / micro-app for the Poketo manga reader. Scrapes sites and stores minimal data about collections.
 
 For supported sites and a Node library, check out [the library docs](https://github.com/poketo/lib).
 
@@ -15,7 +15,7 @@ It's nice when browsers can handle everything on their own. The fewer servers in
 * Sync data across devices
 * Persist data on devices over long periods of time
 
-This service fills those gaps. It uses Node to scrape scanlator or aggregator sites for series info and chapter images. It stores manga collections on a server for permanence and cross-device browsing, but by capturing as little data as possible (ie. no email, no accounts).
+This service fills those gaps. It uses Node to scrape scanlator or aggregator sites for series info and chapter images. It stores manga collections on a server for permanence and cross-device browsing, but captures as little data as possible (ie. no email, no accounts).
 
 ### API
 
@@ -40,8 +40,9 @@ The Poketo endpoints are direct calls to the [poketo library](https://github.com
 
 ### Colophon
 
-Deployed on [Now](https://now.sh), hooked into a MongoDB database from [mLab](https://mlab.com) for persistence. Feel free to clone and run your own instance with the same setup! Front-end code can be found at [poketo/site](https://github.com/poketo/site).
+Deployed on [Now](https://now.sh). Collection data is stored in a MongoDB database from [mLab](https://mlab.com). Front-end code can be found at [poketo/site](https://github.com/poketo/site).
 
+Feel free to clone and run your own instance with the same setup!
 
 ### License
 
