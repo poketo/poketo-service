@@ -3172,9 +3172,9 @@ pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
 
-poketo@^0.0.23:
-  version "0.0.23"
-  resolved "https://registry.yarnpkg.com/poketo/-/poketo-0.0.23.tgz#186f481039797a6b795a9cf00e0c983a0973a89b"
+poketo@^0.0.24:
+  version "0.0.24"
+  resolved "https://registry.yarnpkg.com/poketo/-/poketo-0.0.24.tgz#a47ebb85eee656c573f65c64b33e4c636fd4c499"
   dependencies:
     cheerio "^1.0.0-rc.2"
     got "^8.3.0"
