@@ -5,8 +5,6 @@ Microservice for scraping manga sites. Used in the [Poketo manga reader](https:/
 
 A tiny service that scrapes sites and returns the data as JSON, to build UIs around. Also includes endpoints to store minimal data about collections, as a stop-gap for cross-browser syncing without accounts.
 
-For a list of supported sites, check out [the Node library docs](https://github.com/poketo/node).
-
 ## Usage
 
 Most Poketo endpoints are direct calls to the [poketo library](https://github.com/poketo/lib).
@@ -39,7 +37,7 @@ See the [Node library docs](https://github.com/poketo/node) for the shape of the
 
 ### URL formats
 
-By default Poketo works with URLs.
+Poketo scrapes sites, so it works by passing in URLs. For a list of supported sites, check out [the Node library docs](https://github.com/poketo/node).
 
 To read a series, you'll need to pass the URL for a chapter index page. Chapter indexes have a listing of all the chapters in a series, and often have details about the series itself. Here are some examples for various sites:
 
