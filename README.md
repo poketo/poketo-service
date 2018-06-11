@@ -11,7 +11,7 @@ Most Poketo endpoints are direct calls to the [poketo library](https://github.co
 
 ### Getting series info
 
-To load data about a series, send a request to `/series`. You can specify the series [by URL or by URL components](#url-formats).
+To load data about a series, send a request to `/series`. You can specify the series [by URL](#passing-urls).
 
 ```html
 <script>
@@ -23,7 +23,7 @@ To load data about a series, send a request to `/series`. You can specify the se
 
 ### Getting chapter info
 
-If you want to read the pages of an individual chapter, send a request to `/chapter`. Like the series endpoint, you can specify the chapter [by URL or by URL components](#url-formats).
+If you want to read the pages of an individual chapter, send a request to `/chapter`. Like the series endpoint, you can specify the chapter [by URL](#passing-urls).
 
 ```html
 <script>
@@ -35,7 +35,7 @@ If you want to read the pages of an individual chapter, send a request to `/chap
 
 See the [Node library docs](https://github.com/poketo/node) for the shape of the response.
 
-### URL formats
+### Passing URLs
 
 Poketo scrapes sites, so it works by passing in URLs. For a list of supported sites, check out [the Node library docs](https://github.com/poketo/node).
 
@@ -69,7 +69,7 @@ Coming soon...
 
 Coming soon...
 
-## Misc
+## Miscellaneous
 
 ### Motivation
 
