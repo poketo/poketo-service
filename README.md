@@ -1,48 +1,94 @@
 poketo-service
 ============
 
-A micro-service / micro-app for the Poketo manga reader. Scrapes sites and stores minimal data about collections.
+Microservice for scraping manga sites. Used in the [Poketo manga reader](https://poketo.app).
 
-For supported sites and a Node library, check out [the library docs](https://github.com/poketo/lib).
+A tiny service that scrapes sites and returns the data as JSON, to build UIs around. Also includes endpoints to store minimal data about collections, as a stop-gap for cross-browser syncing without accounts.
 
-## Documentation
+For a list of supported sites, check out [the Node library docs](https://github.com/poketo/node).
 
-### Context
+## Usage
 
-It's nice when browsers can handle everything on their own. The fewer servers involved, the better. Unfortunately, due to web restrictions browsers can't:
+Most Poketo endpoints are direct calls to the [poketo library](https://github.com/poketo/lib).
+
+### Getting series info
+
+To load data about a series, send a request to `/series`. You can specify the series [by URL or by URL components](#url-formats).
+
+```html
+<script>
+  fetch('https://api.poketo.app/series?url=http://merakiscans.com/senryu-girl')
+    .then(response => response.json())
+    .then(series => console.log(series.title, series.chapters))
+</script>
+```
+
+### Getting chapter info
+
+If you want to read the pages of an individual chapter, send a request to `/chapter`. Like the series endpoint, you can specify the chapter [by URL or by URL components](#url-formats).
+
+```html
+<script>
+  fetch('https://api.poketo.app/chapter?url=http://merakiscans.com/senryu-girl/5')
+    .then(response => response.json())
+    .then(chapter => console.log(chapter.chapterNumber, chapter.pages))
+</script>
+```
+
+See the [Node library docs](https://github.com/poketo/node) for the shape of the response.
+
+### URL formats
+
+By default Poketo works with URLs.
+
+To read a series, you'll need to pass the URL for a chapter index page. Chapter indexes have a listing of all the chapters in a series, and often have details about the series itself. Here are some examples for various sites:
+
+* [Mangadex](https://mangadex.org/manga/15653/dragon-ball-super), `https://mangadex.org/manga/15653`
+* [Manga Stream](https://readms.net/manga/attack_on_titan), `https://readms.net/manga/attack_on_titan`
+* [Jaimini's Box](https://jaiminisbox.com/reader/series/my-hero-academia), `https://jaiminisbox.com/reader/series/my-hero-academia`
+
+To read a chapter, pass the page for that specific chapter. To continue the examples above:
+
+* [Mangadex](https://mangadex.org/chapter/261311/1), `https://mangadex.org/chapter/261311/1`
+* [Manga Stream](https://readms.net/r/attack_on_titan/105/5057/1), `https://readms.net/r/attack_on_titan/105/5057/1`
+* [Jaimini's Box](https://jaiminisbox.com/reader/read/my-hero-academia/en/0/150/page/1), `https://jaiminisbox.com/reader/read/my-hero-academia/en/0/150/page/1`
+
+It should be relatively obvious site-to-site which page URLs you'll want to pass in. Plus, most Poketo API responses have URLs included in case you want to reference a chapter after fetching the series details.
+
+### Collection actions
+
+Detailed docs for this section are pending. These are only really used by the [Poketo reader](https://poketo.app).
+
+#### Getting series in a collection
+
+Coming soon...
+
+#### Adding and removing bookmarks
+
+Coming soon...
+
+#### Marking chapters as read
+
+Coming soon...
+
+## Misc
+
+### Motivation
+
+It's nice when browsers can handle everything on their own. The fewer servers behind the web, the better. Unfortunately, browsers can't easily:
 
 * Scrape sites on other domains
 * Sync data across devices
 * Persist data on devices over long periods of time
 
-This service fills those gaps. It uses Node to scrape scanlator or aggregator sites for series info and chapter images. It stores manga collections on a server for permanence and cross-device browsing, but captures as little data as possible (ie. no email, no accounts).
+This service fills those gaps:
 
-### API
-
-More detailed docs to come, but for now…
-
-```
-# Collection endpoints
-POST   /collection/new                              Create a new collection
-GET    /collection/:slug                            Get collection and series data
-POST   /collection/:slug/bookmark/new               Create a new bookmark
-DELETE /collection/:slug/bookmark/:seriesId         Remove a bookmark
-POST   /collection/:slug/bookmark/:seriesId/read    Mark a bookmark as "read"
-
-# Poketo endpoints
-GET    /series?url=1                                Get series info by URL
-GET    /series?siteId=1&seriesSlug=2                Get series info by site and slug
-GET    /chapter?url=1                               Get chapter info by URL
-GET    /chapter?siteId=1&seriesSlug=2&chapterSlug=3 Get chapter info by site and slug
-```
-
-The Poketo endpoints are direct calls to the [poketo library](https://github.com/poketo/lib), so others can build on top of it too.
+* Uses Node to scrape scanlator or aggregator sites for series info and chapter images
+* Stores manga collections on a server for permanence and cross-device browsing (but captures as little data as possible ie. no email, no accounts)
 
 ### Colophon
 
-Deployed on [Now](https://now.sh). Collection data is stored in a MongoDB database from [mLab](https://mlab.com). Front-end code can be found at [poketo/site](https://github.com/poketo/site).
-
-Feel free to clone and run your own instance with the same setup!
+The live version at <api.poketo.app> is deployed on [Now](https://now.sh) and collection data is hosted on a MongoDB database from [mLab](https://mlab.com). Feel free to clone and run your own instance with the same setup!
 
 ### License
 
