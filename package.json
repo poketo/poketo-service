@@ -4,8 +4,8 @@
   "private": true,
   "main": "dist/server.js",
   "scripts": {
-    "now-start": "node dist/server.js",
-    "start": "nodemon lib/server.js --exec babel-node --presets env,stage-2,flow",
+    "now-start": "node dist/server.js | bunyan -o short",
+    "start": "nodemon lib/server.js --exec babel-node --presets env,stage-2,flow | bunyan -o short",
     "build": "babel lib -d dist --ignore '*.test.js'",
     "deploy": "now --public --name poketo-api",
     "test": "jest"
@@ -19,6 +19,7 @@
     "@koa/cors": "^2.2.1",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
+    "koa-bunyan-logger": "^2.0.0",
     "koa-route": "^3.2.0",
     "mongorito": "^3.0.4",
     "normalize-url": "^2.0.1",
