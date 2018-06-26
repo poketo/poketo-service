@@ -1,9 +1,7 @@
 poketo-service
 ============
 
-Microservice for scraping manga sites. Used in the [Poketo manga reader](https://poketo.app).
-
-A tiny service that scrapes sites and returns the data as JSON, to build UIs around. Also includes endpoints to store minimal data about collections, as a stop-gap for cross-browser syncing without accounts.
+A microservice for scraping manga sites. Also includes endpoints to store minimal data about collections, as a stop-gap for cross-browser syncing without accounts. Used in the [Poketo manga reader](https://poketo.app).
 
 ## Usage
 
@@ -21,6 +19,8 @@ To load data about a series, send a request to `/series`. You can specify the se
 </script>
 ```
 
+See the response format here: [https://api.poketo.app/series?url=http://merakiscans.com/senryu-girl](https://api.poketo.app/series?url=http://merakiscans.com/senryu-girl)
+
 ### Getting chapter info
 
 If you want to read the pages of an individual chapter, send a request to `/chapter`. Like the series endpoint, you can specify the chapter [by URL](#passing-urls).
@@ -33,7 +33,7 @@ If you want to read the pages of an individual chapter, send a request to `/chap
 </script>
 ```
 
-See the [Node library docs](https://github.com/poketo/node) for the shape of the response.
+See the response format here: [https://api.poketo.app/chapter?url=http://merakiscans.com/senryu-girl/5](https://api.poketo.app/chapter?url=http://merakiscans.com/senryu-girl/5)
 
 ### Passing URLs
 
@@ -55,7 +55,7 @@ It should be relatively obvious site-to-site which page URLs you'll want to pass
 
 ### Collection actions
 
-Detailed docs for this section are pending. These are only really used by the [Poketo reader](https://poketo.app).
+Detailed docs for this section are pending. These are primarily used by the [Poketo reader](https://poketo.app).
 
 #### Getting series in a collection
 
@@ -63,11 +63,25 @@ Coming soon...
 
 #### Adding and removing bookmarks
 
-Coming soon...
+To add a new bookmark
+
+```
+POST https://api.poketo.app/collection/:slug/bookmark/new
+```
+
+To remove a bookmark
+
+```
+DELETE https://api.poketo.app/collection/:slug/bookmark/:seriesId/read
+```
 
 #### Marking chapters as read
 
-Coming soon...
+```
+POST https://api.poketo.app/collection/:slug/bookmark/:seriesId/read
+```
+
+Looks for a `lastReadAt` field in the JSON body.
 
 ## Miscellaneous
 
@@ -86,7 +100,7 @@ This service fills those gaps:
 
 ### Colophon
 
-The live version at <api.poketo.app> is deployed on [Now](https://now.sh) and collection data is hosted on a MongoDB database from [mLab](https://mlab.com). Feel free to clone and run your own instance with the same setup!
+The live version at [api.poketo.app](https://api.poketo.app) is deployed on [Now](https://now.sh) and collection data is hosted on a MongoDB database from [mLab](https://mlab.com). Feel free to clone and run your own instance with the same setup!
 
 ### License
 
