@@ -10,11 +10,6 @@
     "deploy": "now --public --name poketo-api",
     "test": "jest"
   },
-  "now": {
-    "env": {
-      "MONGO_URL": "@poketo-mongo-url"
-    }
-  },
   "dependencies": {
     "@koa/cors": "^2.2.1",
     "koa": "^2.4.1",
