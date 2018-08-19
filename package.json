@@ -5,8 +5,8 @@
   "main": "dist/server.js",
   "scripts": {
     "now-start": "node dist/server.js | bunyan -o short",
-    "start": "nodemon lib/server.js --exec babel-node --presets env,stage-2,flow | bunyan -o short",
-    "build": "babel lib -d dist --ignore '*.test.js'",
+    "start": "nodemon src/server.js --exec babel-node --presets env,stage-2,flow | bunyan -o short",
+    "build": "babel src -d dist --ignore '*.test.js'",
     "test": "jest"
   },
   "dependencies": {
