@@ -1,11 +1,11 @@
 {
   "name": "poketo-service",
   "alias": "api.poketo.app",
-  "public": true,
-  "scale": {
-    "min": 1,
-    "max": "auto"
+  "type": "docker",
+  "features": {
+    "cloud": "v2"
   },
+  "public": true,
   "env": {
     "MONGO_URL": "@poketo-mongo-url"
   }
