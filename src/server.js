@@ -234,6 +234,12 @@ const getUrl = ctx => {
   const { query } = ctx.request;
   const { url, id } = query;
 
+  ctx.assert(
+    Boolean(url) || Boolean(id),
+    400,
+    `Please provider either 'id' or 'url' as a query parameter.`,
+  );
+
   return url ? url : poketo.constructUrl(id);
 };
 
