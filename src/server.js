@@ -10,7 +10,7 @@ import pmap from 'p-map';
 import shortid from 'shortid';
 
 import poketo from 'poketo';
-import db, { Collection } from './db';
+import { Collection } from './db';
 import utils from './utils';
 
 const app = new Koa();
@@ -27,7 +27,7 @@ const getErrorStatus = (err): number => {
       return 400;
     case 'TIMEOUT':
       return 504;
-    default:
+    default: {
       const status =
         // From poketo:
         err.statusCode ||
@@ -35,8 +35,9 @@ const getErrorStatus = (err): number => {
         err.status;
 
       return status || 500;
+    }
   }
-}
+};
 
 app.use(async (ctx, next) => {
   try {
@@ -54,7 +55,12 @@ app.use(async (ctx, next) => {
     ctx.status = err.status || getErrorStatus(err);
     ctx.body = body;
 
-    ctx.log.error(err, 'Error during request from %s for %s', ctx.request.get('referer'), ctx.path);
+    ctx.log.error(
+      err,
+      'Error during request from %s for %s',
+      ctx.request.get('referer'),
+      ctx.path,
+    );
     ctx.app.emit('error', err, ctx);
   }
 });
@@ -79,7 +85,11 @@ app.on('error', () => {});
 
 app.use(
   route.get('/', async ctx => {
-    ctx.assert(false, 404, `Welcome to the Poketo API! If you're looking for documentation, check out https://github.com/poketo/service`)
+    ctx.assert(
+      false,
+      404,
+      `Welcome to the Poketo API! If you're looking for documentation, check out https://github.com/poketo/service`,
+    );
   }),
 );
 
@@ -88,7 +98,11 @@ app.use(
     const { bookmarks } = ctx.request.body;
 
     ctx.assert(Array.isArray(bookmarks), 400, `Bookmarks must be an array`);
-    ctx.assert(bookmarks.length > 0, 400, `Bookmarks must have at least one series URL`);
+    ctx.assert(
+      bookmarks.length > 0,
+      400,
+      `Bookmarks must have at least one series URL`,
+    );
 
     const series = await pmap(
       bookmarks,
@@ -126,35 +140,36 @@ app.use(
 );
 
 app.use(
-  route.post(
-    '/collection/:slug/bookmark/new',
-    async (ctx, slug) => {
-      const collection = await Collection.findOne({ slug });
-      ctx.assert(collection, 404);
+  route.post('/collection/:slug/bookmark/new', async (ctx, slug) => {
+    const collection = await Collection.findOne({ slug });
+    ctx.assert(collection, 404);
 
-      const { seriesUrl, linkToUrl = null, lastReadAt } = ctx.request.body;
+    const { seriesUrl, linkToUrl = null, lastReadAt } = ctx.request.body;
 
-      ctx.assert(utils.isUrl(seriesUrl), 400, `Invalid URL '${seriesUrl}'`);
-      ctx.assert(linkToUrl === null || utils.isUrl(linkToUrl), 400, `Invalid URL '${linkToUrl ? linkToUrl : ''}'`);
+    ctx.assert(utils.isUrl(seriesUrl), 400, `Invalid URL '${seriesUrl}'`);
+    ctx.assert(
+      linkToUrl === null || utils.isUrl(linkToUrl),
+      400,
+      `Invalid URL '${linkToUrl ? linkToUrl : ''}'`,
+    );
 
-      // NOTE: we make a request to the series here to both: (a) validate that
-      // we can read and support this series and (b) to normalize the URL and
-      // ID through poketo so we're not storing duplicates.
-      const series = await poketo.getSeries(seriesUrl);
+    // NOTE: we make a request to the series here to both: (a) validate that
+    // we can read and support this series and (b) to normalize the URL and
+    // ID through poketo so we're not storing duplicates.
+    const series = await poketo.getSeries(seriesUrl);
 
-      collection.addBookmark(series, linkToUrl, lastReadAt);
-      await collection.save();
+    collection.addBookmark(series, linkToUrl, lastReadAt);
+    await collection.save();
 
-      ctx.body = {
-        collection: {
-          slug: collection.get('slug'),
-          bookmarks: utils.keyArrayBy(collection.get('bookmarks'), obj => obj.id),
-        },
-        series,
-      }
-    },
-  )
-)
+    ctx.body = {
+      collection: {
+        slug: collection.get('slug'),
+        bookmarks: utils.keyArrayBy(collection.get('bookmarks'), obj => obj.id),
+      },
+      series,
+    };
+  }),
+);
 
 app.use(
   route.delete(
@@ -170,9 +185,9 @@ app.use(
         slug: collection.get('slug'),
         bookmarks: utils.keyArrayBy(collection.get('bookmarks'), obj => obj.id),
       };
-    }
-  )
-)
+    },
+  ),
+);
 
 app.use(
   route.post(
@@ -182,13 +197,23 @@ app.use(
       ctx.assert(collection, 404);
 
       const bookmarks = collection.get('bookmarks');
-      const currentBookmarkIndex = bookmarks.findIndex(bookmark => bookmark.id === seriesId);
+      const currentBookmarkIndex = bookmarks.findIndex(
+        bookmark => bookmark.id === seriesId,
+      );
       const currentBookmark = bookmarks[currentBookmarkIndex];
-      ctx.assert(currentBookmarkIndex !== -1, 404, `Could not find bookmark with ID ${seriesId}`);
+      ctx.assert(
+        currentBookmarkIndex !== -1,
+        404,
+        `Could not find bookmark with ID ${seriesId}`,
+      );
 
       const { lastReadAt } = ctx.request.body;
 
-      ctx.assert(Number.isInteger(lastReadAt), 400, `Could not parse 'lastReadAt' timestamp`);
+      ctx.assert(
+        Number.isInteger(lastReadAt),
+        400,
+        `Could not parse 'lastReadAt' timestamp`,
+      );
 
       const newBookmark = { ...currentBookmark, lastReadAt };
       const newBookmarks = utils.replaceItemAtIndex(
@@ -205,18 +230,22 @@ app.use(
   ),
 );
 
-const getUrl = (ctx) => {
+const getUrl = ctx => {
   const { query } = ctx.request;
   const { url, id } = query;
 
   return url ? url : poketo.constructUrl(id);
 };
 
-const fetch = async (ctx) => {
+const fetch = async ctx => {
   const target = getUrl(ctx);
   const type = poketo.getType(target);
 
-  ctx.assert(ctx.path === '/' + type, 400, `The resource at '${target}' is a ${type}. Use '/${type}' instead.`);
+  ctx.assert(
+    ctx.path === '/' + type,
+    400,
+    `The resource at '${target}' is a ${type}. Use '/${type}' instead.`,
+  );
 
   const action = type === 'chapter' ? poketo.getChapter : poketo.getSeries;
 
@@ -224,12 +253,15 @@ const fetch = async (ctx) => {
   ctx.body = await action(target);
   const duration = Date.now() - start;
 
-  ctx.log.info({
-    target,
-    referrer: ctx.request.get('referer'),
-    duration,
-    type,
-  }, 'Fetching');
+  ctx.log.info(
+    {
+      target,
+      referrer: ctx.request.get('referer'),
+      duration,
+      type,
+    },
+    'Fetching',
+  );
 };
 
 app.use(route.get('/series', fetch));
@@ -242,4 +274,4 @@ app.use(route.get('/chapter', fetch));
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT);
-console.log(`> Listening on http://localhost:${PORT}`)
+console.log(`> Listening on http://localhost:${PORT}`);

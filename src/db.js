@@ -1,9 +1,8 @@
 // @flow
 
 import { Database, Model } from 'mongorito';
-import utils from './utils';
-
 import type { Series } from 'poketo';
+import utils from './utils';
 
 if (process.env.MONGO_URL === undefined && process.env.NOW !== 'true') {
   require('dotenv').config();
@@ -11,15 +10,23 @@ if (process.env.MONGO_URL === undefined && process.env.NOW !== 'true') {
 
 const db = new Database(process.env.MONGO_URL);
 
-export class Collection extends Model {};
+export class Collection extends Model {}
 
 const extendCollection = Collection => {
-  Collection.prototype.addBookmark = function (series: Series, linkToUrl: ?string, lastReadAt: number = utils.timestamp()) {
+  Collection.prototype.addBookmark = function(
+    series: Series,
+    linkToUrl: ?string,
+    lastReadAt: number = utils.timestamp(),
+  ) {
     const bookmarks = this.get('bookmarks');
-    const existingBookmark = bookmarks.find(bookmark => bookmark.id === series.id);
+    const existingBookmark = bookmarks.find(
+      bookmark => bookmark.id === series.id,
+    );
 
     if (existingBookmark) {
-      const err: any = new Error(`A bookmark for ${series.url} already exists!`);
+      const err: any = new Error(
+        `A bookmark for ${series.url} already exists!`,
+      );
       err.status = 400;
       throw err;
     }
@@ -37,11 +44,13 @@ const extendCollection = Collection => {
     const newBookmarks = [...bookmarks, bookmark];
 
     this.set('bookmarks', newBookmarks);
-  }
+  };
 
-  Collection.prototype.removeBookmark = function (seriesId) {
+  Collection.prototype.removeBookmark = function(seriesId) {
     const bookmarks = this.get('bookmarks');
-    const bookmarkIndex = bookmarks.findIndex(bookmark => bookmark.id === seriesId);
+    const bookmarkIndex = bookmarks.findIndex(
+      bookmark => bookmark.id === seriesId,
+    );
 
     if (bookmarkIndex === -1) {
       const err: any = new Error(`Could not find bookmark with ID ${seriesId}`);
@@ -51,8 +60,10 @@ const extendCollection = Collection => {
 
     const newBookmarks = utils.deleteItemAtIndex(bookmarks, bookmarkIndex);
 
-    if (newBookmarks.length < 1) {
-      const err: any = new Error(`Cannot delete last bookmark in a collection. Delete the collection instead.`);
+    if (newBookmarks.length === 0) {
+      const err: any = new Error(
+        `Cannot delete last bookmark in a collection. Delete the collection instead.`,
+      );
       err.status = 400;
       throw err;
     }
@@ -62,7 +73,7 @@ const extendCollection = Collection => {
     // array field.
     this.unset('bookmarks');
     this.set('bookmarks', newBookmarks);
-  }
+  };
 };
 
 Collection.use(extendCollection);
