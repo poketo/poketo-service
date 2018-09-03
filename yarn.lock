@@ -4623,9 +4623,9 @@ pn@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/pn/-/pn-1.1.0.tgz#e2f4cef0e219f463c179ab37463e4e1ecdccbafb"
 
-poketo@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/poketo/-/poketo-0.4.1.tgz#a45bcf612b1ff65b991bd598b9264d3b16836c26"
+poketo@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/poketo/-/poketo-0.6.0.tgz#6407362bddbd1c77efdd70b6dc592b13b47af466"
   dependencies:
     cheerio "^1.0.0-rc.2"
     cookie "^0.3.1"
