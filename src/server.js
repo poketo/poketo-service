@@ -209,11 +209,10 @@ app.use(
 
       const { lastReadAt, lastReadChapterId } = ctx.request.body;
 
-      const hasChapterId = lastReadChapterId || lastReadChapterId === null;
-      const readIndicatorType = hasChapterId ? 'chapterId' : 'timestamp';
-      const hasValidReadIndicator = hasChapterId
-        ? lastReadChapterId === null || utils.isPoketoId(lastReadChapterId)
-        : Number.isInteger(lastReadAt);
+      const hasValidLastReadId =
+        lastReadChapterId === null || utils.isPoketoId(lastReadChapterId);
+      const hasValidLastReadAt = Number.isInteger(lastReadAt);
+      const hasValidReadIndicator = hasValidLastReadId || hasValidLastReadAt;
 
       ctx.assert(
         hasValidReadIndicator,
@@ -221,7 +220,7 @@ app.use(
         `Could not parse 'lastReadAt' timestamp or 'lastReadChapterId' id`,
       );
 
-      if (readIndicatorType === 'chapterId') {
+      if (hasValidLastReadId) {
         ctx.assert(
           lastReadChapterId === null ||
             lastReadChapterId.includes(currentBookmark.id),
@@ -233,9 +232,12 @@ app.use(
       }
 
       const newBookmark = { ...currentBookmark };
-      if (readIndicatorType === 'timestamp') {
+
+      if (hasValidLastReadAt) {
         newBookmark.lastReadAt = lastReadAt;
-      } else {
+      }
+
+      if (hasValidLastReadId) {
         newBookmark.lastReadChapterId = lastReadChapterId;
       }
 
