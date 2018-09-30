@@ -2,15 +2,15 @@
   "name": "poketo-service",
   "version": "0.0.2",
   "private": true,
-  "main": "dist/server.js",
+  "main": "build/main.js",
   "scripts": {
-    "now-start": "node dist/server.js | bunyan -o short",
-    "start": "nodemon src/server.js --exec babel-node --presets env,stage-2,flow | bunyan -o short",
-    "build": "babel src -d dist --ignore '*.test.js'",
+    "start": "backpack dev | bunyan -o short",
+    "build": "backpack build",
     "lint": "xo && flow",
     "test": "jest"
   },
   "dependencies": {
+    "backpack-core": "^0.7.0",
     "@koa/cors": "^2.2.1",
     "koa": "^2.4.1",
     "koa-bodyparser": "^4.2.0",
@@ -23,11 +23,8 @@
     "shortid": "^2.2.8"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
     "babel-eslint": "^9.0.0",
-    "babel-preset-env": "^1.6.1",
     "babel-preset-flow": "^6.23.0",
-    "babel-preset-stage-2": "^6.24.1",
     "dotenv": "^5.0.0",
     "flow-bin": "^0.79.1",
     "got": "^9.2.0",
