@@ -6,6 +6,7 @@
   "scripts": {
     "start": "backpack dev | bunyan -o short",
     "build": "backpack build",
+    "now-build": "backpack build",
     "lint": "xo && flow",
     "test": "jest"
   },
