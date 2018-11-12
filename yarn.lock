@@ -95,12 +95,6 @@
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.stat/-/fs.stat-1.1.2.tgz#54c5a964462be3d4d78af631363c18d6fa91ac26"
 
-"@sindresorhus/is@^0.11.0":
-  version "0.11.0"
-  resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.11.0.tgz#a65970040a5b55c4713452666703b92a6c331fdb"
-  dependencies:
-    symbol-observable "^1.2.0"
-
 "@sindresorhus/is@^0.12.0":
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.12.0.tgz#55c37409c809e802efea25911a579731adfc6e07"
@@ -1194,18 +1188,6 @@ cache-content-type@^1.0.0:
   dependencies:
     mime-types "^2.1.18"
     ylru "^1.2.0"
-
-cacheable-request@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/cacheable-request/-/cacheable-request-5.0.0.tgz#7ce347741c48d85c76bc41b78f6bf13e2907056d"
-  dependencies:
-    clone-response "^1.0.2"
-    get-stream "^4.0.0"
-    http-cache-semantics "^4.0.0"
-    keyv "^3.0.0"
-    lowercase-keys "^1.0.1"
-    normalize-url "^3.1.0"
-    responselike "^1.0.2"
 
 cacheable-request@^5.1.0:
   version "5.1.0"
@@ -2844,21 +2826,6 @@ got@^6.7.1:
     timed-out "^4.0.0"
     unzip-response "^2.0.1"
     url-parse-lax "^1.0.0"
-
-got@^9.2.0:
-  version "9.2.2"
-  resolved "https://registry.yarnpkg.com/got/-/got-9.2.2.tgz#d6cb73f40d4cb512864c2f66f275f258ab43aa25"
-  dependencies:
-    "@sindresorhus/is" "^0.11.0"
-    "@szmarczak/http-timer" "^1.1.0"
-    cacheable-request "^5.0.0"
-    decompress-response "^3.3.0"
-    duplexer3 "^0.1.4"
-    get-stream "^4.0.0"
-    mimic-response "^1.0.1"
-    p-cancelable "^0.5.0"
-    to-readable-stream "^1.0.0"
-    url-parse-lax "^3.0.0"
 
 got@^9.3.2:
   version "9.3.2"
@@ -4872,10 +4839,6 @@ osenv@^0.1.4:
   dependencies:
     os-homedir "^1.0.0"
     os-tmpdir "^1.0.0"
-
-p-cancelable@^0.5.0:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/p-cancelable/-/p-cancelable-0.5.1.tgz#b797a33c43c645cd70d5a838b1d25352b9e29e75"
 
 p-cancelable@^1.0.0:
   version "1.0.0"
