@@ -1,3 +1,5 @@
+> **Note:** This repository is now deprecated, and has been combined into the [poketo-reader](https://github.com/poketo/poketo-reader) repository under the `api/` folder. Look there for the new source.
+
 # poketo-service
 
 A microservice for scraping manga sites. Also includes endpoints to store minimal data about collections, as a stop-gap for cross-browser syncing without accounts. Used in the [Poketo manga reader](https://poketo.app).
