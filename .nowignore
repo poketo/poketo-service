@@ -1,5 +1,16 @@
+# Ignore environment variables
+.env
+
+# Ignore npm/yarn scraps
+dist/
 node_modules/
-flow-typed/
 npm-debug.log
 yarn-debug.log
 yarn-error.log
+
+# Ignore flow typings
+flow-typed/
+
+# Ignore DB scripts and backups
+script/migrations/
+backups/
